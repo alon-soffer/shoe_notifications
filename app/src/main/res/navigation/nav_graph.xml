@@ -1,6 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/welcomeFragment">
 
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="alon.soffer.shoenotifications.WelcomeFragment"
+        android:label="welcome_fragment"
+        tools:layout="@layout/welcome_fragment" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_ageFragment"
+            app:destination="@id/ageFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ageFragment"
+        android:name="alon.soffer.shoenotifications.AgeFragment"
+        android:label="age_fragment"
+        tools:layout="@layout/age_fragment" >
+        <action
+            android:id="@+id/action_ageFragment_to_termsFragment"
+            app:destination="@id/termsFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="alon.soffer.shoenotifications.TermsFragment"
+        android:label="terms_fragment"
+        tools:layout="@layout/terms_fragment" >
+        <action
+            android:id="@+id/action_termsFragment_to_mathFragment"
+            app:destination="@id/mathFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mathFragment"
+        android:name="alon.soffer.shoenotifications.MathFragment"
+        android:label="math_fragment"
+        tools:layout="@layout/math_fragment" >
+        <action
+            android:id="@+id/action_mathFragment_to_namesFragment"
+            app:destination="@id/namesFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/namesFragment"
+        android:name="alon.soffer.shoenotifications.NamesFragment"
+        android:label="names_fragment"
+        tools:layout="@layout/names_fragment" >
+        <action
+            android:id="@+id/action_namesFragment_to_afterOnboardingFragment"
+            app:destination="@id/afterOnboardingFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="alon.soffer.shoenotifications.firstFragment"
+        android:label="first_fragment"
+        tools:layout="@layout/first_fragment" >
+        <action
+            android:id="@+id/action_firstFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_firstFragment_to_afterOnboardingFragment"
+            app:destination="@id/afterOnboardingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/afterOnboardingFragment"
+        android:name="alon.soffer.shoenotifications.AfterOnboardingFragment"
+        android:label="after_onboarding_fragment"
+        tools:layout="@layout/after_onboarding_fragment" />
 </navigation>

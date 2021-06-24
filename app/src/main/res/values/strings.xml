@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Shoe Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_button">Get Started</string>
+    <string name="welcome_text">We at Shoe Notifications are so happy to see you here</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
+    <string name="stay_tuned_more_to_come">Stay tuned, more to come!</string>
 </resources>
