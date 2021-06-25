@@ -10,6 +10,7 @@
         android:id="@+id/termsHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@id/termsText"
@@ -33,7 +34,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
 
-        android:text="Please acknowledge that blah balh balh long terms text yada yada yada"
+        android:text="Please acknowledge that you understand that when completing the onboarding, the company (hereby: Shoe Notifications) is entitled to come into your (hereby: the user) house and take your shoes"
         android:textSize="20sp"
         android:gravity="center"
         />

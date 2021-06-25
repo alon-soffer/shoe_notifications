@@ -40,6 +40,7 @@ class MathFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.math_fragment, container, false)
+
         // update step in headline
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.onboardingStep.value = stepIdx
@@ -51,13 +52,15 @@ class MathFragment : Fragment() {
         }
         nextButton.isEnabled = false
 
+        answer = rootView.findViewById(R.id.answer)
+        problem = rootView.findViewById(R.id.problem)
 
         // set math problem and wait for answer from user
-        problem = rootView.findViewById(R.id.problem)
-        answer = rootView.findViewById(R.id.answer)
-        getRandomMathProblem()  //TODO!!!! if came back from next screen don't change problem
+        if (!sharedViewModel.returnToMath) {
+            // if we came from a previous fragment - generate new problem
+            getRandomMathProblem()
+        }
         problem.text = currentProblem
-
         answer.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -72,6 +75,7 @@ class MathFragment : Fragment() {
             }
         })
 
+        sharedViewModel.returnToMath = false
         return rootView
     }
 
@@ -123,8 +127,20 @@ class MathFragment : Fragment() {
         return ans
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("answer", answer.text.toString())
+        outState.putString("problem", problem.text.toString())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null){
+            answer!!.setText(savedInstanceState.getString("answer"))
+            problem!!.setText(savedInstanceState.getString("problem"))
+        }
     }
 
 }

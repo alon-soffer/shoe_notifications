@@ -64,7 +64,6 @@ class AgeFragment : Fragment() {
                     else{
                         nextButton.isEnabled = false
                         under18Text.visibility = View.VISIBLE
-                        //TODO: pop toast maybe
                     }
                 }
                 catch (e: java.lang.NumberFormatException){
@@ -76,8 +75,15 @@ class AgeFragment : Fragment() {
         return rootView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("age", ageText.text.toString())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null)
+            ageText!!.setText(savedInstanceState.getString("age"))
     }
 
 }

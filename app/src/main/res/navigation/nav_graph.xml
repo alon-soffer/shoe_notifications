@@ -14,7 +14,9 @@
             android:id="@+id/action_welcomeFragment_to_ageFragment"
             app:destination="@id/ageFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -25,8 +27,10 @@
         <action
             android:id="@+id/action_ageFragment_to_termsFragment"
             app:destination="@id/termsFragment"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left" />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -37,8 +41,10 @@
         <action
             android:id="@+id/action_termsFragment_to_mathFragment"
             app:destination="@id/mathFragment"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left" />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -49,40 +55,16 @@
         <action
             android:id="@+id/action_mathFragment_to_namesFragment"
             app:destination="@id/namesFragment"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left" />
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/namesFragment"
         android:name="alon.soffer.shoenotifications.NamesFragment"
         android:label="names_fragment"
-        tools:layout="@layout/names_fragment" >
-        <action
-            android:id="@+id/action_namesFragment_to_afterOnboardingFragment"
-            app:destination="@id/afterOnboardingFragment"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left" />
-    </fragment>
+        tools:layout="@layout/names_fragment" />
 
-    <fragment
-        android:id="@+id/firstFragment"
-        android:name="alon.soffer.shoenotifications.firstFragment"
-        android:label="first_fragment"
-        tools:layout="@layout/first_fragment" >
-        <action
-            android:id="@+id/action_firstFragment_to_welcomeFragment"
-            app:destination="@id/welcomeFragment"
-            app:enterAnim="@android:anim/slide_out_right"
-            app:exitAnim="@android:anim/slide_in_left" />
-        <action
-            android:id="@+id/action_firstFragment_to_afterOnboardingFragment"
-            app:destination="@id/afterOnboardingFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/afterOnboardingFragment"
-        android:name="alon.soffer.shoenotifications.AfterOnboardingFragment"
-        android:label="after_onboarding_fragment"
-        tools:layout="@layout/after_onboarding_fragment" />
 </navigation>

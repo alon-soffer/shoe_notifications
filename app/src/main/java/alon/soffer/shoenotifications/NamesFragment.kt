@@ -30,6 +30,7 @@ class NamesFragment : Fragment() {
 
     // ---- constants -----
     private val stepIdx = "5"
+    private val minNameLen = 2
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -41,7 +42,7 @@ class NamesFragment : Fragment() {
         // init button
         nextButton = rootView.findViewById(R.id.nextStepButton)
         nextButton.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.afterOnboardingFragment)
+            sharedViewModel.onboardingDone.value = true
         }
         nextButton.isEnabled = false
 
@@ -74,13 +75,13 @@ class NamesFragment : Fragment() {
 
         // set observers for when names change - update validNames
         val firstNameObserver = Observer<String> { newName ->
-            // check if first name or last name are empty: yes: validNames = false, else true
-            viewModel.validNames.value = (newName != "" && viewModel.lastNameLD.value != "")
+            // check if first name or last name are sorter than 2: yes: validNames = false, else true
+            viewModel.validNames.value = (newName.length > minNameLen && viewModel.lastNameLD.value!!.length > minNameLen)
         }
 
         val lastNameObserver = Observer<String> { newName ->
-            // check if last name or first name are empty: yes: validNames = false, else true
-            viewModel.validNames.value = !(newName == "" || viewModel.firstNameLD.value == "")
+            // check if last name or first name are sorter than 2: yes: validNames = false, else true
+            viewModel.validNames.value = (newName.length > minNameLen && viewModel.firstNameLD.value!!.length > minNameLen)
         }
         viewModel.firstNameLD.observe(viewLifecycleOwner, firstNameObserver)
         viewModel.lastNameLD.observe(viewLifecycleOwner, lastNameObserver)
@@ -92,14 +93,23 @@ class NamesFragment : Fragment() {
         }
         viewModel.validNames.observe(viewLifecycleOwner, validNamesObserver)
 
+        sharedViewModel.returnToMath = true
         return rootView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProvider(this).get(NamesViewModel::class.java)
-//        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        // TODO: Use the ViewModel
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("firstName", firstName.text.toString())
+        outState.putString("lastName", lastName.text.toString())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState != null){
+            firstName!!.setText(savedInstanceState.getString("firstName"))
+            lastName!!.setText(savedInstanceState.getString("lastName"))
+        }
     }
 
 }
