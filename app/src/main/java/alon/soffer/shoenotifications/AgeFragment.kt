@@ -24,7 +24,7 @@ class AgeFragment : Fragment() {
     private lateinit var sharedViewModel: SharedViewModel
     // ----- UI elements -----
     private lateinit var nextButton: Button
-    private lateinit var ageText: EditText
+    private var ageText: EditText? = null
     private lateinit var under18Text: TextView
 
     // ---- constants -----
@@ -49,7 +49,9 @@ class AgeFragment : Fragment() {
 
 
         ageText = rootView.findViewById(R.id.ageEditText)
-        ageText.addTextChangedListener(object : TextWatcher{
+        if (savedInstanceState != null)
+            ageText!!.setText(savedInstanceState.getString("age",))
+        ageText!!.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -77,13 +79,14 @@ class AgeFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("age", ageText.text.toString())
+        if (ageText != null)
+            outState.putString("age", ageText!!.text.toString())
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null)
-            ageText!!.setText(savedInstanceState.getString("age"))
-    }
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        if (savedInstanceState != null)
+//            ageText!!.setText(savedInstanceState.getString("age"))
+//    }
 
 }

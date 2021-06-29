@@ -22,7 +22,7 @@ class TermsFragment : Fragment() {
     private lateinit var sharedViewModel: SharedViewModel
     // ----- UI elements -----
     private lateinit var nextButton: Button
-    private lateinit var checkBox: CheckBox
+    private var checkBox: CheckBox? = null
     // ---- constants -----
     private val stepIdx = "3"
 
@@ -39,21 +39,26 @@ class TermsFragment : Fragment() {
         nextButton.isEnabled = false
 
         checkBox = rootView.findViewById(R.id.checkBox)
-        checkBox.setOnCheckedChangeListener { _, _ -> nextButton.isEnabled = checkBox.isChecked }
+        checkBox!!.setOnCheckedChangeListener { _, _ -> nextButton.isEnabled = checkBox!!.isChecked }
+
+        if (savedInstanceState != null){
+            checkBox!!.isChecked = savedInstanceState.getBoolean("checked")
+        }
 
         return rootView
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean("checked", checkBox.isChecked)
+        if (checkBox != null)
+            outState.putBoolean("checked", checkBox!!.isChecked)
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null){
-            checkBox.isChecked = savedInstanceState.getBoolean("checked")
-        }
-    }
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        if (savedInstanceState != null){
+//            checkBox.isChecked = savedInstanceState.getBoolean("checked")
+//        }
+//    }
 
 }

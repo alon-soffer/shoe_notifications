@@ -25,14 +25,13 @@ class MathFragment : Fragment() {
 
     // ----- UI elements -----
     private lateinit var nextButton: Button
-    private lateinit var problem: TextView
-    private lateinit var answer: EditText
+    private var problem: TextView? = null
+    private var answer: EditText? = null
 
     // ----- math problem related -----
-    private lateinit var currentProblem : String
-    private var currentAnswer : Int = 0
+    private var currentProblem : String? = null
+    private var currentAnswer : Int? = 0
     private val operations : List<String> = mutableListOf("+", "-", "*")
-    private val mathProblems : HashMap<String, Int> = hashMapOf("15-4*4" to -1, "18+5-10" to 13)
 
     // ---- constants -----
     private val stepIdx = "4"
@@ -41,6 +40,7 @@ class MathFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.math_fragment, container, false)
 
+        viewModel = ViewModelProvider(this).get(MathViewModel::class.java)
         // update step in headline
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.onboardingStep.value = stepIdx
@@ -60,13 +60,18 @@ class MathFragment : Fragment() {
             // if we came from a previous fragment - generate new problem
             getRandomMathProblem()
         }
-        problem.text = currentProblem
-        answer.addTextChangedListener(object : TextWatcher{
+
+        problem!!.text = viewModel.problemLD.value
+        currentAnswer = viewModel.realAnswerLD.value
+        answer!!.setText(viewModel.userAnswerLD.value)
+
+        answer!!.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 try {
                     val userAnswer = s.toString().toInt()
+                    viewModel.userAnswerLD.value = s.toString()
                     nextButton.isEnabled = (userAnswer == currentAnswer)
                 }
                 catch (e: java.lang.NumberFormatException) {
@@ -88,9 +93,10 @@ class MathFragment : Fragment() {
             val num2 = (0..10).random()
             val num3 = (0..9).random()
 
-            currentProblem = getProblem(oper1, oper2, num1.toString(), num2.toString(), num3.toString())
-            currentAnswer = solveProblem(oper1, oper2, num1, num2, num3)
-            if (currentAnswer >= 0)
+            viewModel.problemLD.value = getProblem(oper1, oper2, num1.toString(), num2.toString(), num3.toString())
+            viewModel.realAnswerLD.value = solveProblem(oper1, oper2, num1, num2, num3)
+
+            if (currentAnswer!! >= 0)
                 break
         }
     }
@@ -125,22 +131,6 @@ class MathFragment : Fragment() {
             }
         }
         return ans
-    }
-
-
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("answer", answer.text.toString())
-        outState.putString("problem", problem.text.toString())
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null){
-            answer!!.setText(savedInstanceState.getString("answer"))
-            problem!!.setText(savedInstanceState.getString("problem"))
-        }
     }
 
 }
